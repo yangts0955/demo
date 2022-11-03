@@ -8,6 +8,7 @@ public enum ResultCode implements IErrorCode{
     VALIDATE_FAILED(404, "parameter validate failed"),
     INCORRECT_PASSWORD(401,"incorrect email or password"),
     UNAUTHORIZED(401, "no login or expired token"),
+    INCORRECT_TOKEN(403,"incorrect token"),
     FORBIDDEN(403, "forbidden"),
 
     NOT_FOUND(404, "employee not found"),

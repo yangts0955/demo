@@ -17,12 +17,12 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalExceptionAdvice {
 
-    @ExceptionHandler(Exception.class)
-    @ResponseBody
-    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-    public CommonResult<Object> handleException(HttpServletRequest req, Exception e) {
-        return CommonResult.failed("serve error");
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseBody
+//    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
+//    public CommonResult<Object> handleException(HttpServletRequest req, Exception e) {
+//        return CommonResult.failed("serve error");
+//    }
 
 
     @ResponseBody

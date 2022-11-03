@@ -1,5 +1,6 @@
 package com.epam.demo.controller;
 
+import com.epam.demo.configuration.interceptor.exception.CommonResult;
 import com.epam.demo.service.EmployeeService;
 import com.epam.demo.vo.EmployeeVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,9 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("employees")
-    public List<EmployeeVO> findAllEmployees(){
-        return employeeService.findAllEmployees();
+    public CommonResult findAllEmployees(){
+        List<EmployeeVO> employeeVOS = employeeService.findAllEmployees();
+        return CommonResult.success(employeeVOS);
     }
 
 }

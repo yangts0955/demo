@@ -1,6 +1,7 @@
 package com.epam.demo.controller;
 
 import com.epam.demo.Entity.Employee;
+import com.epam.demo.configuration.interceptor.exception.CommonResult;
 import com.epam.demo.dto.EmployeeDto;
 import com.epam.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,8 @@ public class LoginApiController {
     private LoginService loginService;
 
     @PutMapping("update")
-    public void updateEmployee(@RequestBody EmployeeDto employeeDto){
-        loginService.updateEmployee(employeeDto);
+    public CommonResult updateEmployee(@RequestBody EmployeeDto employeeDto){
+        Boolean update = loginService.updateEmployee(employeeDto);
+        return CommonResult.success(update, "更新成功");
     }
 }

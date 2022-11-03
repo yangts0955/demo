@@ -3,11 +3,15 @@ package com.epam.demo.service;
 import com.epam.demo.Entity.Employee;
 import com.epam.demo.dto.EmployeeDto;
 
+import java.util.Map;
+
 public interface LoginService {
 
-    String login(Employee employee);
+    Map login(Employee employee);
 
-    void register(EmployeeDto employee);
+    Boolean register(EmployeeDto employee);
 
-    void updateEmployee(EmployeeDto employee);
+    Boolean updateEmployee(EmployeeDto employee);
+
+    Boolean logout();
 }

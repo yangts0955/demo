@@ -26,7 +26,6 @@ public class DataDictionary {
     @NonNull
     String displayName;
 
-    @ColumnDefault(value = "0")
     Integer category;
 
     String categoryInstruction;
