@@ -11,7 +11,5 @@ public interface LoginService {
 
     Boolean register(EmployeeDto employee);
 
-    Boolean updateEmployee(EmployeeDto employee);
-
     Boolean logout();
 }

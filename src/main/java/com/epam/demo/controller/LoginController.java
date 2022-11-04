@@ -1,15 +1,15 @@
 package com.epam.demo.controller;
 
-import com.epam.demo.Entity.DataDictionary;
 import com.epam.demo.Entity.Employee;
-import com.epam.demo.Entity.LoginUser;
-import com.epam.demo.configuration.interceptor.exception.CommonResult;
+import com.epam.demo.configuration.interceptor.exception.UnifyResponse;
 import com.epam.demo.dto.EmployeeDto;
-import com.epam.demo.mapper.EmployeeMapper;
 import com.epam.demo.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -20,21 +20,15 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("register")
-    public CommonResult register(@RequestBody EmployeeDto employee){
-        Boolean register = loginService.register(employee);
-        return CommonResult.success(register, "注册成功");
+    public ResponseEntity register(@RequestBody EmployeeDto employee, HttpServletRequest request){
+        loginService.register(employee);
+        return UnifyResponse.success("register successfully", request);
     }
 
     @PostMapping("login")
-    public CommonResult<Map<String, String>> login(@RequestBody Employee employee){
-        Map<String,String> token = loginService.login(employee);
-        return CommonResult.success(token, "登录成功");
-    }
-
-    @RequestMapping("logout")
-    public CommonResult<Boolean> logout(){
-        Boolean logout = loginService.logout();
-        return CommonResult.success(logout,"退出登录");
+    public ResponseEntity<Map<String, String>> login(@RequestBody Employee employee){
+        Map<String, String> token = loginService.login(employee);
+        return new ResponseEntity<>( token, HttpStatus.OK);
     }
 
     @GetMapping("logins")

@@ -1,5 +1,6 @@
 package com.epam.demo.configuration.interceptor.exception;
 
+import com.epam.demo.configuration.interceptor.exception.httpException.HttpException;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,21 +18,24 @@ import java.util.Date;
 @ControllerAdvice
 public class GlobalExceptionAdvice {
 
-//    @ExceptionHandler(Exception.class)
-//    @ResponseBody
-//    @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
-//    public CommonResult<Object> handleException(HttpServletRequest req, Exception e) {
-//        return CommonResult.failed("serve error");
-//    }
+    @ExceptionHandler(value=Exception.class)
+    @ResponseBody
+    public ResponseEntity<UnifyResponse> handleException(HttpServletRequest req, Exception e) {
+        String requestUrl = req.getRequestURI();
+        String method = req.getMethod();
+        UnifyResponse message = new UnifyResponse(e.getMessage(), method + " " + requestUrl);
+        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 
     @ResponseBody
-    @ExceptionHandler(value = ApiException.class)
-    public CommonResult handle(ApiException e) {
-        if (e.getErrorCode() != null) {
-            return CommonResult.failed(e.getErrorCode());
-        }
-        return CommonResult.failed(e.getMessage());
+    @ExceptionHandler(value = HttpException.class)
+    public ResponseEntity<UnifyResponse> handle(HttpServletRequest req, HttpException e) {
+        String requestUrl = req.getRequestURI();
+        String method = req.getMethod();
+//        ResponseEntity
+        UnifyResponse message = new UnifyResponse(e.getMessage(), method + " " + requestUrl);
+        return new ResponseEntity<>(message, e.getHttpStatusCode());
     }
 
 }

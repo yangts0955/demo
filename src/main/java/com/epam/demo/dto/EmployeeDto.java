@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Data
 public class EmployeeDto implements Serializable {
+    Long id;
     String name;
     String password;
 
