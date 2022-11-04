@@ -31,5 +31,12 @@ public enum GenderEnum {
                 .orElse(GenderEnum.UNKNOWN).getType();
     }
 
+    public static String toIndex(String type){
+        return Stream.of(GenderEnum.values())
+                .filter(genderEnum -> Objects.equals(genderEnum.type, type))
+                .findAny()
+                .orElse(GenderEnum.UNKNOWN).getIndex();
+    }
+
 
 }

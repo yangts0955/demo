@@ -10,6 +10,7 @@ public enum ExceptionMessageEnum {
     FORBIDDEN( "forbidden"),
     INCORRECT_TOKEN("incorrect token"),
     NAME_MODIFY_FORBIDDEN("cannot change name or email"),
+    EMPLOYEE_NOT_FOUND("employee not found"),
     EMAIL_EXISTED("email existed");
 
     private final String message;

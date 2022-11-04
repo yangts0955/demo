@@ -18,11 +18,5 @@ public class EmployeeVO {
     String gender;
     String status;
 
-    public String getGender(){
-        return GenderEnum.toType(this.gender);
-    }
 
-    public String getStatus(){
-        return StatusEnum.toType(this.status).toString();
-    }
 }

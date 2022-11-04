@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Boolean updateEmployee(EmployeeDto employeeDto) {
         Employee existedEmployee = employeeRepository.findById(employeeDto.getId())
-                .orElseThrow(() -> {throw new NotFoundException(ExceptionMessageEnum.INCORRECT_PASSWORD);}); // if modified email stored in database
+                .orElseThrow(() -> {throw new NotFoundException(ExceptionMessageEnum.EMPLOYEE_NOT_FOUND);}); // if modified email stored in database
         isModified(existedEmployee.getName(), employeeDto.getName());
         isModified(existedEmployee.getEmail(),employeeDto.getEmail());
         employeeDto.setPassword(encodePassword(employeeDto.getPassword()));

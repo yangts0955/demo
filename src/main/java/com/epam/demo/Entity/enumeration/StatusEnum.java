@@ -30,6 +30,13 @@ public enum StatusEnum {
                 .findAny()
                 .orElse(StatusEnum.UNKNOWN).getType();
     }
+
+    public static String toIndex(String type){
+        return Stream.of(StatusEnum.values())
+                .filter(statusEnum -> Objects.equals(statusEnum.type, type))
+                .findAny()
+                .orElse(StatusEnum.UNKNOWN).getIndex();
+    }
 }
 
 
