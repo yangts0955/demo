@@ -26,12 +26,12 @@ public class LoginApiController {
     @PutMapping("update")
     public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto, HttpServletRequest request){
         employeeService.updateEmployee(employeeDto);
-        return UnifyResponse.success("update successfully", request);
+        return new ResponseEntity<>( "update successfully", HttpStatus.OK);
     }
 
     @RequestMapping("logout")
     public ResponseEntity logout(HttpServletRequest request){
         loginService.logout();
-        return UnifyResponse.success("logout successfully", request);
+        return new ResponseEntity<>( "logout successfully", HttpStatus.OK);
     }
 }

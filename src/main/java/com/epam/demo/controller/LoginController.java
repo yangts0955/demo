@@ -20,9 +20,9 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("register")
-    public ResponseEntity register(@RequestBody EmployeeDto employee, HttpServletRequest request){
+    public ResponseEntity register(@RequestBody EmployeeDto employee){
         loginService.register(employee);
-        return UnifyResponse.success("register successfully", request);
+        return new ResponseEntity<>( "register successfully", HttpStatus.OK);
     }
 
     @PostMapping("login")
@@ -31,13 +31,4 @@ public class LoginController {
         return new ResponseEntity<>( token, HttpStatus.OK);
     }
 
-    @GetMapping("logins")
-    public String loginGet(){
-        return "success";
-    }
-
-    @PostMapping("logins")
-    public String loginPost(){
-        return "success";
-    }
 }

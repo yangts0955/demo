@@ -1,31 +1,27 @@
 package com.epam.demo.configuration.interceptor.exception;
 
 import com.epam.demo.configuration.interceptor.exception.httpException.HttpException;
-import lombok.extern.log4j.Log4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
+import com.epam.demo.configuration.interceptor.exception.httpException.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 @ControllerAdvice
 public class GlobalExceptionAdvice {
 
-    @ExceptionHandler(value=Exception.class)
-    @ResponseBody
-    public ResponseEntity<UnifyResponse> handleException(HttpServletRequest req, Exception e) {
-        String requestUrl = req.getRequestURI();
-        String method = req.getMethod();
-        UnifyResponse message = new UnifyResponse(e.getMessage(), method + " " + requestUrl);
-        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(value=Exception.class)
+//    @ResponseBody
+//    public ResponseEntity<UnifyResponse> handleException(HttpServletRequest req, Exception e) {
+//        String requestUrl = req.getRequestURI();
+//        String method = req.getMethod();
+//        UnifyResponse message = new UnifyResponse(e.getMessage(), method + " " + requestUrl);
+//        return new ResponseEntity<>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
 
     @ResponseBody
@@ -37,5 +33,6 @@ public class GlobalExceptionAdvice {
         UnifyResponse message = new UnifyResponse(e.getMessage(), method + " " + requestUrl);
         return new ResponseEntity<>(message, e.getHttpStatusCode());
     }
+
 
 }

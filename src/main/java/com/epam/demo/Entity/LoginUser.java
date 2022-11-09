@@ -1,13 +1,16 @@
 package com.epam.demo.Entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -15,9 +18,26 @@ import java.util.Collection;
 public class LoginUser implements UserDetails {
     private Employee employee;
 
+    private List<String> permissions;
+
+    public LoginUser(Employee employee, List<String> permissions) {
+        this.employee = employee;
+        this.permissions = permissions;
+    }
+
+    @JSONField(serialize = false)
+    Collection<? extends GrantedAuthority> authorities;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        if(authorities!=null){
+            return authorities;
+        }
+        //把permissions中String类型的权限信息封装成SimpleGrantedAuthority对象
+        authorities = permissions.stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+        return authorities;
     }
 
     @Override

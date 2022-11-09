@@ -23,10 +23,8 @@ public class UnifyResponse {
         this.request = request;
     }
 
-    public static ResponseEntity success(String message, HttpServletRequest request) {
-        String url = request.getRequestURI();
-        String method = request.getMethod();
-        UnifyResponse response = new UnifyResponse(message, method+ " " + url);
+    public ResponseEntity success(String message) {
+        UnifyResponse response = new UnifyResponse(message, request);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 

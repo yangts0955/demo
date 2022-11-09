@@ -78,11 +78,6 @@ public class LoginServiceImpl implements LoginService {
         return token;
     }
 
-    private String parseJson(LoginUser loginUser){
-        EmployeeVO employeeVO = EmployeeMapper.INSTANCE.convertToVO(loginUser.getEmployee());
-        return JSON.toJSONString(employeeVO);
-    }
-
     private String LoginUserParseJson(LoginUser loginUser){
         return JSON.toJSONString(loginUser);
     }
@@ -93,7 +88,7 @@ public class LoginServiceImpl implements LoginService {
         if (employeeRepository.findByEmail(employee.getEmail()).isPresent())
             throw new ValidateException(ExceptionMessageEnum.EMAIL_EXISTED);
         employee.setPassword(encodePassword(employee.getPassword()));
-        employeeRepository.save(employee);     // SQL error!!! how to catch?
+        employeeRepository.save(employee);
         return true;
     }
 
@@ -101,11 +96,9 @@ public class LoginServiceImpl implements LoginService {
     public Boolean logout() {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        System.out.println(authentication.getPrincipal().toString());  //获取不到，不知道怎么测试 TODO: try catch
             LoginUser loginUser = (LoginUser) authentication.getPrincipal();
             Long userid = loginUser.getEmployee().getId();
-//        Long userid = LocalEmployee.getEmployee().getId();
-            redisCache.deleteObject(REDIS_CACHE_KEY_HEAD+userid); // 从jwt 得到id
+            redisCache.deleteObject(REDIS_CACHE_KEY_HEAD+userid);
         }catch (Exception e){
             throw new UnauthorizedException(ExceptionMessageEnum.FORBIDDEN);
         }

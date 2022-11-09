@@ -35,7 +35,7 @@ public enum StatusEnum {
         return Stream.of(StatusEnum.values())
                 .filter(statusEnum -> Objects.equals(statusEnum.type, type))
                 .findAny()
-                .orElse(StatusEnum.UNKNOWN).getIndex();
+                .orElse(StatusEnum.ACTIVE).getIndex();
     }
 }
 

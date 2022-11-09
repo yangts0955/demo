@@ -8,12 +8,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -37,19 +40,32 @@ public class Employee {
     String email; //校验
     @NotNull(message = "birthday needed")
     LocalDate birthday;
-    @ColumnDefault("0")
     @NotBlank(message = "gender needed")
     String gender;
-    @ColumnDefault("0")
+    @ColumnDefault("active")
     String status;
 
-//    public String getGender(){
-//        return GenderEnum.toType(this.gender);
-//    }
-//
-//    public String getStatus(){
-//        return StatusEnum.toType(this.status);
-//    }
+    @ManyToMany
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JoinTable(name="employee_role",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    List<Role> roles;
 
+    public String getGender(){
+        return GenderEnum.toType(this.gender);
+    }
+
+    public String getStatus(){
+        return StatusEnum.toType(this.status);
+    }
+
+    public void setGender(String type){
+        this.gender = GenderEnum.toIndex(type);
+    }
+
+    public void setStatus(String type){
+        this.status = StatusEnum.toIndex(type);
+    }
 
 }
